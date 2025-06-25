@@ -46,7 +46,6 @@ return {
                         break
                     end
                 end
-                -- print('hi', is_existed)
 
                 -- add to list if not existed
                 if not is_existed then
