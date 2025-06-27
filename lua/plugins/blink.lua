@@ -10,7 +10,7 @@ return {
             },
 
             completion = { documentation = { auto_show = true } },
-            signature = { enabled = true },
+            signature = { enabled = true, window = { show_documentation = true } },
 
             sources = {
                 default = { 'lsp', 'path', 'snippets', 'buffer' },
