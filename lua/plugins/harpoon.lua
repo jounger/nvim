@@ -4,9 +4,9 @@ vim.cmd('highlight! HarpoonNumberActive guibg=NONE guifg=#7aa2f7')
 vim.cmd('highlight! HarpoonNumberInactive guibg=NONE guifg=#7aa2f7')
 vim.cmd('highlight! TabLineFill guibg=NONE guifg=white')
 
-local function toggle_telescope(harpoon_files)
+local function toggle_telescope(list)
     local file_paths = {}
-    for _, item in ipairs(harpoon_files.items) do
+    for _, item in ipairs(list.items) do
         table.insert(file_paths, item.value)
     end
     local themes = require('telescope.themes')
@@ -35,12 +35,10 @@ return {
             local harpoon = require('harpoon')
             vim.keymap.set("n", "<leader>ha", function()
                 local is_existed = false
-                local current_file_path = vim.api.nvim_buf_get_name(0)
-                local current_file_relative_path = vim.fn.expand("%:.")
+                local current_file_path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":.")
                 for index = 1, harpoon:list():length() do
                     local harpoon_file_path = harpoon:list():get(index).value
-                    -- delete from list if existed
-                    if harpoon_file_path == current_file_relative_path or harpoon_file_path == current_file_path then
+                    if current_file_path == harpoon_file_path then
                         harpoon:list():remove_at(index)
                         is_existed = true
                         break
