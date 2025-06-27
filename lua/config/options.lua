@@ -11,6 +11,10 @@ set.shiftwidth = 4
 set.autoindent = true
 set.expandtab = true
 
+-- search settings
+set.ignorecase = true
+set.smartcase = true
+
 -- appearance
 set.termguicolors = true
 set.background = "dark"

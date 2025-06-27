@@ -12,11 +12,19 @@ return {
                 },
             },
         },
-        config = function()
-            local capabilities = require('blink.cmp').get_lsp_capabilities()
-            require("lspconfig").lua_ls.setup { capabilites = capabilities }
-            require("lspconfig").gopls.setup { capabilites = capabilities }
-            require("lspconfig").pyright.setup { capabilites = capabilities }
+        opts = {
+            servers = {
+                lua_ls = {},
+                gopls = {},
+                pyright = {},
+            },
+        },
+        config = function(_, opts)
+            local lspconfig = require("lspconfig")
+            for server, config in pairs(opts.servers) do
+                config.capabilites = require("blink.cmp").get_lsp_capabilities(config.capabilites)
+                lspconfig[server].setup(config)
+            end
 
             vim.api.nvim_create_autocmd('LspAttach', {
                 callback = function(args)
