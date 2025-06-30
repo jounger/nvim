@@ -5,8 +5,12 @@ vim.keymap.set("n", "<leader>fe", vim.cmd.Ex)
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 -- move up or down and then center
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "<C-u>", "<C-u><CR>zz")
+vim.keymap.set("n", "<C-d>", "<C-d><CR>zz")
+vim.keymap.set("n", "<C-k>", "<C-w><C-k>")
+vim.keymap.set("n", "<C-j>", "<C-w><C-j>")
+vim.keymap.set("n", "<C-h>", "<C-w><C-h>")
+vim.keymap.set("n", "<C-l>", "<C-w><C-l>")
 
 -- yank paragraph to clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])

@@ -1,8 +1,16 @@
-local show_text = false
+vim.diagnostic.config({
+    virtual_text = {
+        severity = { min = vim.diagnostic.severity.WARN }
+    },
+    signs = {
+        severity = { min = vim.diagnostic.severity.WARN }
+    },
+    jump = {
+        severity = { min = vim.diagnostic.severity.WARN }
+    }
+})
 
-local toggle_virtual_text = function()
-    show_text = not show_text
-    vim.diagnostic.config({ virtual_text = show_text })
-end
-
-vim.keymap.set("n", "<leader>le", toggle_virtual_text)
+vim.keymap.set('n', '<leader>le', function()
+    local new_config = not vim.diagnostic.config().virtual_lines
+    vim.diagnostic.config({ virtual_lines = new_config })
+end, { desc = 'Toggle diagnostic virtual_lines' })
