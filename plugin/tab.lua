@@ -4,7 +4,13 @@ local function tabs()
     local contents = {}
     local current_file_path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":.")
     for index = 1, harpoon:list():length() do
-        local harpoon_file_path = harpoon:list():get(index).value
+        local file = harpoon:list():get(index)
+        if file == nil then
+            harpoon:list():clear()
+            break
+        end
+
+        local harpoon_file_path = file.value
         local file_name = harpoon_file_path == "" and "(empty)" or vim.fn.fnamemodify(harpoon_file_path, ':t')
         if current_file_path == harpoon_file_path then
             contents[index] = string.format("%%#HarpoonNumberActive# %s. %%#HarpoonActive#%s ", index, file_name)
