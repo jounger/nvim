@@ -22,6 +22,10 @@ return {
                     "javascript",
                     "go",
                     "python",
+                    "php",
+                    "html",
+                    "htmldjango",
+                    "twig",
                 },
             })
         end

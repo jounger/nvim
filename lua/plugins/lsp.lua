@@ -2,7 +2,6 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            'saghen/blink.cmp',
             {
                 "folke/lazydev.nvim",
                 opts = {
@@ -16,7 +15,11 @@ return {
             servers = {
                 lua_ls = {},
                 gopls = {},
-                pyright = {},
+                pyright = {
+                    on_attach = function(client, bufnr)
+                        client.server_capabilities.documentFormattingProvider = false
+                    end,
+                },
             },
         },
         config = function(_, opts)
@@ -35,11 +38,46 @@ return {
                     vim.api.nvim_create_autocmd('BufWritePre', {
                         buffer = args.buf,
                         callback = function()
+                            -- use autopep8 to format
+                            if vim.bo[args.buf].filetype == "python" then return end
                             vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
                         end,
                     })
                 end,
             })
         end,
+    },
+    {
+        "nvimtools/none-ls.nvim",
+        config = function()
+            local null_ls = require("null-ls")
+            local helpers = require("null-ls.helpers")
+            local autopep8 = {
+                name = "autopep8",
+                method = null_ls.methods.FORMATTING,
+                filetypes = { "python" },
+                generator = helpers.formatter_factory({
+                    command = "autopep8",
+                    args = { "-" },
+                    to_stdin = true,
+                }),
+            }
+
+            null_ls.setup({
+                sources = {
+                    autopep8
+                },
+                on_attach = function(client, bufnr)
+                    if client.supports_method("textDocument/formatting") then
+                        vim.api.nvim_create_autocmd("BufWritePre", {
+                            buffer = bufnr,
+                            callback = function()
+                                vim.lsp.buf.format({ async = false })
+                            end,
+                        })
+                    end
+                end,
+            })
+        end
     }
 }
