@@ -28,8 +28,10 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufAdd", "User" }, {
         vim.o.tabline = tabs()
 
         -- set keymap for each tab
+        vim.keymap.set("n", "<A-[>", function() harpoon:list():prev() end)
+        vim.keymap.set("n", "<A-]>", function() harpoon:list():next() end)
         for index = 1, harpoon:list():length() do
-            vim.keymap.set("n", string.format("<a-%s>", index), function() harpoon:list():select(index) end)
+            vim.keymap.set("n", string.format("<A-%s>", index), function() harpoon:list():select(index) end)
         end
     end
 })
