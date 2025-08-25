@@ -37,7 +37,7 @@ return {
                 mode = 'topline',
                 enable = true,
                 multiwindow = true,
-                max_lines = 0,
+                max_lines = 5,
                 line_numbers = true,
             }
         end

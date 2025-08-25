@@ -20,6 +20,21 @@ return {
                         client.server_capabilities.documentFormattingProvider = false
                     end,
                 },
+                ts_ls = {
+                    init_options = {
+                        plugins = {
+                            {
+                                name = '@vue/typescript-plugin',
+                                location = vim.env.HOME ..
+                                '/.nvm/versions/node/v22.16.0/lib/node_modules/@vue/language-server',
+                                languages = { 'vue' },
+                                configNamespace = 'typescript',
+                            },
+                        },
+                    },
+                    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+                },
+                vue_ls = {},
             },
         },
         config = function(_, opts)

@@ -1,5 +1,6 @@
 -- OPTIONS
 local set = vim.opt
+vim.o.title = true
 
 -- line nums
 vim.opt.number = true
