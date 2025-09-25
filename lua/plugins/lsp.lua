@@ -26,7 +26,7 @@ return {
                             {
                                 name = '@vue/typescript-plugin',
                                 location = vim.env.HOME ..
-                                '/.nvm/versions/node/v22.16.0/lib/node_modules/@vue/language-server',
+                                    '/.nvm/versions/node/v22.16.0/lib/node_modules/@vue/language-server',
                                 languages = { 'vue' },
                                 configNamespace = 'typescript',
                             },
@@ -34,14 +34,16 @@ return {
                     },
                     filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
                 },
-                vue_ls = {},
+                vue_ls = {
+                    filetypes = { "vue" },
+                },
             },
         },
         config = function(_, opts)
-            local lspconfig = require("lspconfig")
             for server, config in pairs(opts.servers) do
                 config.capabilites = require("blink.cmp").get_lsp_capabilities(config.capabilites)
-                lspconfig[server].setup(config)
+                vim.lsp.config(server, config)
+                vim.lsp.enable(server)
             end
 
             vim.api.nvim_create_autocmd('LspAttach', {

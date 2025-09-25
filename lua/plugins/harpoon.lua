@@ -34,21 +34,7 @@ return {
         config = function()
             local harpoon = require('harpoon')
             vim.keymap.set("n", "<leader>ha", function()
-                local is_existed = false
-                local current_file_path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":.")
-                for index = 1, harpoon:list():length() do
-                    local harpoon_file_path = harpoon:list():get(index).value
-                    if current_file_path == harpoon_file_path then
-                        harpoon:list():remove_at(index)
-                        is_existed = true
-                        break
-                    end
-                end
-
-                -- add to list if not existed
-                if not is_existed then
-                    harpoon:list():add()
-                end
+                harpoon:list():add()
                 vim.cmd(":do User")
             end)
             vim.keymap.set("n", "<leader>hh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
